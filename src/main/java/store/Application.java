@@ -3,6 +3,7 @@ package store;
 import java.util.List;
 import store.config.AppConfig;
 import store.domain.Product;
+import store.domain.PurchaseProducts;
 import store.io.InputView;
 import store.io.OutputView;
 import store.service.ProductService;
@@ -15,7 +16,7 @@ public class Application {
         List<Product> allProducts = productService.getAllProducts();
         OutputView.printAllStockQuantities(allProducts);
         try(InputView inputView = new InputView()){
-
+            PurchaseProducts purchaseProducts = inputView.inputPurchaseProducts();
         }
     }
 }

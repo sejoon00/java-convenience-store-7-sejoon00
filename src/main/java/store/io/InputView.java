@@ -1,6 +1,7 @@
 package store.io;
 
 import java.util.function.Supplier;
+import store.domain.PurchaseProducts;
 import store.error.ErrorCode;
 
 public class InputView implements AutoCloseable {
@@ -47,8 +48,8 @@ public class InputView implements AutoCloseable {
         }
     }
 
-    public void inputPurchaseProducts() {
-//        return retryInput("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])" )
+    public PurchaseProducts inputPurchaseProducts() {
+        return retryInput("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])", () -> PurchaseProducts.from(readLine()));
     }
 
 //    public PurchaseAmount inputPurchaseAmount() {
