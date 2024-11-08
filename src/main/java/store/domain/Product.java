@@ -21,6 +21,10 @@ public class Product {
         return this.name;
     }
 
+    public boolean hasPromotion() {
+        return promotion != null;
+    }
+
     public String getName() {
         return name;
     }

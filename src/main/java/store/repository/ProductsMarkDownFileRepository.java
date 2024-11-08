@@ -24,14 +24,10 @@ public class ProductsMarkDownFileRepository implements ProductsRepository {
             List<Product> products = new ArrayList<>();
             while ((textLine = reader.readLine()) != null) {
 
-                List<String> splitTextLine = Arrays.stream(textLine.split(","))
+                List<String> splitTextLine = Arrays.stream(textLine.split(",",-1))
                         .map(this::getValueOrNull)
                         .toList();
-                String name = splitTextLine.get(0);
-                int price = parsePriceToInt(splitTextLine.get(1));
-                int quantity = parseQuantityToInt(splitTextLine.get(2));
-                String promotion = splitTextLine.get(3);
-                products.add(new Product(name, price, quantity, promotion));
+                addProducts(splitTextLine, products);
             }
             return products;
         } catch (FileNotFoundException e) {
@@ -39,6 +35,14 @@ public class ProductsMarkDownFileRepository implements ProductsRepository {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void addProducts(List<String> splitTextLine, List<Product> products) {
+        String name = splitTextLine.get(0);
+        int price = parsePriceToInt(splitTextLine.get(1));
+        int quantity = parseQuantityToInt(splitTextLine.get(2));
+        String promotion = splitTextLine.get(3);
+        products.add(new Product(name, price, quantity, promotion));
     }
 
     public Integer parsePriceToInt(String price){

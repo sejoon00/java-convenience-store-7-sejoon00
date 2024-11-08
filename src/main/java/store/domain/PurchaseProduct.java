@@ -7,10 +7,12 @@ public class PurchaseProduct {
     public static final int VALID_INPUT_SPLIT_COUNT = 2;
     private String name;
     private int quantity;
+    private boolean isPromotionProduct;
 
     private PurchaseProduct(String name, int quantity) {
         this.name = name;
         this.quantity = quantity;
+        this.isPromotionProduct = false;
     }
 
     public static PurchaseProduct from(String productInput) {
@@ -19,6 +21,18 @@ public class PurchaseProduct {
         validInputCount(splitInput);
         validateName(splitInput);
         return new PurchaseProduct(splitInput[0], parseInt(splitInput[1]));
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setIsPromotionTrue() {
+        isPromotionProduct = true;
     }
 
     private static void validateName(String[] splitInput) {

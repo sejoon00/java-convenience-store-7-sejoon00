@@ -1,12 +1,11 @@
 package store.domain;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
 public class PurchaseProducts {
 
-    List<PurchaseProduct> purchaseProducts;
+    private final List<PurchaseProduct> purchaseProducts;
 
     private PurchaseProducts(List<PurchaseProduct> purchaseProducts) {
         this.purchaseProducts = purchaseProducts;
@@ -24,5 +23,9 @@ public class PurchaseProducts {
         return Arrays.stream(split)
                 .map(String::trim)
                 .toList();
+    }
+
+    public List<PurchaseProduct> getPurchaseProducts() {
+        return purchaseProducts;
     }
 }

@@ -3,20 +3,29 @@ package store;
 import java.util.List;
 import store.config.AppConfig;
 import store.domain.Product;
+import store.domain.Promotion;
 import store.domain.PurchaseProducts;
+import store.domain.StockProducts;
 import store.io.InputView;
 import store.io.OutputView;
 import store.service.ProductService;
+import store.service.PromotionService;
+import store.service.PurchaseProductService;
 
 public class Application {
-    public static void main(String[] args) {
-        // TODO: 프로그램 구현
 
-        ProductService productService = AppConfig.productService();
-        List<Product> allProducts = productService.getAllProducts();
-        OutputView.printAllStockQuantities(allProducts);
-        try(InputView inputView = new InputView()){
+    private static final ProductService productService = AppConfig.productService();
+    private static final PromotionService promotionService = AppConfig.promotionService();
+    private static final PurchaseProductService purchaseProductService = AppConfig.purchaseProductService();
+
+    public static void main(String[] args) {
+
+        StockProducts stockProducts = productService.getAllProducts();
+        OutputView.printAllStockQuantities(stockProducts.getStockProducts());
+        try (InputView inputView = new InputView()) {
             PurchaseProducts purchaseProducts = inputView.inputPurchaseProducts();
+            purchaseProductService.getReceipts(purchaseProducts, stockProducts);
+            System.out.println();
         }
     }
 }
