@@ -3,6 +3,7 @@ package store.domain;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import store.error.ErrorCode;
 
 public class GeneralProducts {
 
@@ -18,5 +19,13 @@ public class GeneralProducts {
                 .collect(Collectors.toMap(Product::getName, product -> product));
 
         return new GeneralProducts(collectMap);
+    }
+
+    public void updateStockQuantity(PurchaseProduct purchaseProduct) {
+        if (!generalProducts.containsKey(purchaseProduct.getName())) {
+            throw new IllegalArgumentException(ErrorCode.NOT_FOUND_PRODUCT.getMessage());
+        }
+        Product product = generalProducts.get(purchaseProduct.getName());
+        product.minusQuantity(purchaseProduct.getQuantity());
     }
 }

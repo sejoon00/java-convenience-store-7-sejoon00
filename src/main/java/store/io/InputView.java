@@ -1,11 +1,14 @@
 package store.io;
 
 import java.util.function.Supplier;
+import store.config.AppConfig;
 import store.domain.PurchaseProducts;
 import store.error.ErrorCode;
+import store.service.PurchaseProductService;
 
 public class InputView implements AutoCloseable {
 
+    private static final PurchaseProductService purchaseProductService = AppConfig.purchaseProductService();
     private final Reader DEFAULT_READER = new ConsoleReader();
     private final Reader reader;
 
@@ -48,21 +51,10 @@ public class InputView implements AutoCloseable {
         }
     }
 
-    public PurchaseProducts inputPurchaseProducts() {
-        return retryInput("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])", () -> PurchaseProducts.from(readLine()));
+    public void inputPurchaseProducts() {
+        retryInput("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])",
+                () -> purchaseProductService.updateStockQuantity(PurchaseProducts.from(readLine())));
     }
-
-//    public PurchaseAmount inputPurchaseAmount() {
-//        return retryInput("구입금액을 입력해 주세요.", () -> new PurchaseAmount(readLine()));
-//    }
-//
-//    public WinnerLotto inputWinningNumbers() {
-//        return retryInput("당첨 번호를 입력해 주세요.", () -> WinnerLotto.from(readLine()));
-//    }
-//
-//    public WinnerLotto inputBonusNumbers(WinnerLotto winnerLotto) {
-//        return retryInput("보너스 번호를 입력해 주세요.", () -> winnerLotto.addBonusNumber(readLine()));
-//    }
 
     @Override
     public void close() {

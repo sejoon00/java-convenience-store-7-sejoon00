@@ -31,6 +31,10 @@ public class PurchaseProduct {
         return quantity;
     }
 
+    public boolean isPromotionProduct() {
+        return isPromotionProduct;
+    }
+
     public void setIsPromotionTrue() {
         isPromotionProduct = true;
     }

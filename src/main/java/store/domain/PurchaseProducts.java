@@ -28,4 +28,26 @@ public class PurchaseProducts {
     public List<PurchaseProduct> getPurchaseProducts() {
         return purchaseProducts;
     }
+
+    public void validateStock(StockProducts stockProducts, List<Promotion> allPromotions){
+        purchaseProducts.forEach(
+                purchaseProduct -> {
+                    PromotionProducts promotionProducts = stockProducts.getPromotionProducts();
+                    if (promotionProducts.isPromotionProduct(purchaseProduct, allPromotions)) {
+                        purchaseProduct.setIsPromotionTrue();
+                    }
+                });
+
+        purchaseProducts
+                .forEach(stockProducts::updateStockQuantity);
+
+        PromotionProducts promotionProducts = stockProducts.getPromotionProducts();
+
+
+
+    }
+
+    public void validateProductExist(StockProducts stockProducts) {
+        purchaseProducts.forEach(stockProducts::validateProductExist);
+    }
 }

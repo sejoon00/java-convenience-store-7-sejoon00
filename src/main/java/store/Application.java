@@ -1,6 +1,7 @@
 package store;
 
 import java.util.List;
+import java.util.function.Supplier;
 import store.config.AppConfig;
 import store.domain.Product;
 import store.domain.Promotion;
@@ -15,7 +16,6 @@ import store.service.PurchaseProductService;
 public class Application {
 
     private static final ProductService productService = AppConfig.productService();
-    private static final PromotionService promotionService = AppConfig.promotionService();
     private static final PurchaseProductService purchaseProductService = AppConfig.purchaseProductService();
 
     public static void main(String[] args) {
@@ -23,8 +23,7 @@ public class Application {
         StockProducts stockProducts = productService.getAllProducts();
         OutputView.printAllStockQuantities(stockProducts.getStockProducts());
         try (InputView inputView = new InputView()) {
-            PurchaseProducts purchaseProducts = inputView.inputPurchaseProducts();
-            purchaseProductService.getReceipts(purchaseProducts, stockProducts);
+            inputView.inputPurchaseProducts();
             System.out.println();
         }
     }

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import store.error.ErrorCode;
 
 public class PromotionProducts {
 
@@ -29,14 +30,12 @@ public class PromotionProducts {
                 .anyMatch(promotion -> promotion.isEqualsName(product.getPromotion()));
     }
 
-    public boolean validateStock(PurchaseProduct purchaseProduct) {
-        //프로모션 상품 기간인지부터 확인하자
-        LocalDateTime now = DateTimes.now();
-
-        if(promotionProducts.containsKey(purchaseProduct.getName())){
-
+    public void updateStockQuantity(PurchaseProduct purchaseProduct) {
+        if (!promotionProducts.containsKey(purchaseProduct.getName())) {
+            throw new IllegalArgumentException(ErrorCode.NOT_FOUND_PRODUCT.getMessage());
         }
-        return true;
+        Product product = promotionProducts.get(purchaseProduct.getName());
+        product.minusQuantity(purchaseProduct.getQuantity());
     }
 
 

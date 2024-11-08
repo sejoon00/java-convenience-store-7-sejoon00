@@ -10,6 +10,8 @@ public enum ErrorCode {
     FILE_VALUE_TYPE_ERROR("파일에 타입 형식에 맞지 않는 값이 저장되어있습니다."),
     INVALID_INPUT_FORMAT("올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요."),
     PROMOTION_COUNT_NOT_POSITIVE_NUMBERS("프로모션의 개수 1 초과여야합니다."),
+    OVER_QUANTITY("재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요."),
+    NOT_FOUND_PRODUCT("존재하지 않는 상품입니다. 다시 입력해 주세요."),
     ;
     private final String message;
     private static final String PREFIX = "[ERROR] ";
