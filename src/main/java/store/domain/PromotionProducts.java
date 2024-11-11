@@ -3,7 +3,6 @@ package store.domain;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import store.error.ErrorCode;
 
 public class PromotionProducts {
 
@@ -31,17 +30,7 @@ public class PromotionProducts {
                 .anyMatch(promotion -> promotion.isEqualsName(product.getPromotionName()));
     }
 
-    public void updateStockQuantity(PurchaseProduct purchaseProduct, GeneralProducts generalProducts) {
-        if (!promotionProducts.containsKey(purchaseProduct.getName())) {
-            throw new IllegalArgumentException(ErrorCode.NOT_FOUND_PRODUCT.getMessage());
-        }
-        Product product = promotionProducts.get(purchaseProduct.getName());
-//        product.minusPromotionQuantity(purchaseProduct, generalProducts);
-    }
-
     public Product getProduct(String productName) {
         return promotionProducts.get(productName);
     }
-
-
 }

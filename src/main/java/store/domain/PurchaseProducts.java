@@ -29,19 +29,6 @@ public class PurchaseProducts {
         return purchaseProducts;
     }
 
-    public void updateStockQuantity(StockProducts stockProducts, List<Promotion> allPromotions){
-        purchaseProducts.forEach(
-                purchaseProduct -> {
-                    PromotionProducts promotionProducts = stockProducts.getPromotionProducts();
-                    if (promotionProducts.isPromotionProduct(purchaseProduct, allPromotions)) {
-                        purchaseProduct.setIsPromotionTrue();
-                    }
-                });
-
-        purchaseProducts
-                .forEach(stockProducts::updateStockQuantity);
-    }
-
     public void validateProductExist(StockProducts stockProducts) {
         purchaseProducts.forEach(stockProducts::validateProductExist);
     }

@@ -26,7 +26,6 @@ public class PurchaseProductService {
     }
 
     public ReceiptResponse getReceipt(PurchaseProducts purchaseProducts, boolean isMembership) {
-        int total = 0;
         StockProducts allProducts = productService.getAllProducts();
         List<PurchaseProductResponse> purchaseProductResponses = new ArrayList<>();
         List<PromotionProductResponse> promotionProductResponses = new ArrayList<>();
@@ -90,12 +89,9 @@ public class PurchaseProductService {
         List<Promotion> allPromotions = promotionService.getAllPromotions();
 
         purchaseProducts.validateProductExist(stockProducts);
-
         GeneralProducts generalProducts = stockProducts.getGeneralProducts();
         PromotionProducts promotionProducts = stockProducts.getPromotionProducts();
-
         List<PurchaseProduct> purchaseProducts1 = purchaseProducts.getPurchaseProducts();
-
         for (PurchaseProduct purchaseProduct : purchaseProducts1) {
             //프로모션 프로덕트라면
             if (promotionProducts.isPromotionProduct(purchaseProduct, allPromotions)) {
@@ -104,10 +100,7 @@ public class PurchaseProductService {
                 Product promotionProduct = promotionProducts.getProduct(purchaseProduct.getName());
 
                 Promotion promotion = promotionProduct.getPromotion();
-//               - 콜라 1,000원 7개 탄산2+1
-//               - 콜라 1,000원 10개
-//               [콜라-10] [콜라-5]
-                // 프로모션 적용 가능 개수를 구한다. 6개
+                // 프로모션 적용 가능 개수를 구한다.
                 int 재고중_프로모션_가능한_개수 = promotionProduct.getAvailablePromotionCount();
                 //프로모션 적용 가능 개수가 구매 개수보다 많다면
                 if (재고중_프로모션_가능한_개수 > 구매개수) {

@@ -21,17 +21,9 @@ public class StockProducts {
     }
 
     public List<Product> getStockProducts() {
-        return Collections.unmodifiableList(this.stockProducts);
+        return this.stockProducts;
     }
 
-    public void updateStockQuantity(PurchaseProduct purchaseProduct) {
-        //TODO: 실제로 재고 차감시켜야됨 아직 안함
-        if(purchaseProduct.isPromotionProduct()){
-            getPromotionProducts().updateStockQuantity(purchaseProduct, getGeneralProducts());
-            return;
-        }
-        getGeneralProducts().minusStockQuantity(purchaseProduct);
-    }
 
     public void validateProductExist(PurchaseProduct purchaseProduct) {
         boolean isExist = stockProducts.stream()
