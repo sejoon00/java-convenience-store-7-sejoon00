@@ -8,6 +8,9 @@ public class PurchaseProduct {
     private String name;
     private int quantity;
     private boolean isPromotionProduct;
+    private int promotionCount;
+    private int generalCount;
+    private int giftCount;
 
     private PurchaseProduct(String name, int quantity) {
         this.name = name;
@@ -21,6 +24,38 @@ public class PurchaseProduct {
         validInputCount(splitInput);
         validateName(splitInput);
         return new PurchaseProduct(splitInput[0], parseInt(splitInput[1]));
+    }
+
+    public int getPromotionCount() {
+        return promotionCount;
+    }
+
+    public int getGeneralCount() {
+        return generalCount;
+    }
+
+    public void setGiftCount(int giftCount) {
+        this.giftCount = giftCount;
+    }
+
+    public int getGiftCount() {
+        return giftCount;
+    }
+
+    public void setPromotionCount(int promotionCount) {
+        this.promotionCount = promotionCount;
+    }
+
+    public void setGeneralCount(int generalCount) {
+        this.generalCount = generalCount;
+    }
+
+    public void plusQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
+    public void minusQuantity(int quantity) {
+        this.quantity -= quantity;
     }
 
     public String getName() {

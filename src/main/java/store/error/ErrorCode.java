@@ -12,6 +12,8 @@ public enum ErrorCode {
     PROMOTION_COUNT_NOT_POSITIVE_NUMBERS("프로모션의 개수 1 초과여야합니다."),
     OVER_QUANTITY("재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요."),
     NOT_FOUND_PRODUCT("존재하지 않는 상품입니다. 다시 입력해 주세요."),
+    NOT_FOUND_PROMOTION("존재하지 않는 프로모션 입니다. 다시 입력해 주세요."),
+
     ;
     private final String message;
     private static final String PREFIX = "[ERROR] ";

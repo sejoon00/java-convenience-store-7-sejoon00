@@ -29,7 +29,7 @@ public class PurchaseProducts {
         return purchaseProducts;
     }
 
-    public void validateStock(StockProducts stockProducts, List<Promotion> allPromotions){
+    public void updateStockQuantity(StockProducts stockProducts, List<Promotion> allPromotions){
         purchaseProducts.forEach(
                 purchaseProduct -> {
                     PromotionProducts promotionProducts = stockProducts.getPromotionProducts();
@@ -40,11 +40,6 @@ public class PurchaseProducts {
 
         purchaseProducts
                 .forEach(stockProducts::updateStockQuantity);
-
-        PromotionProducts promotionProducts = stockProducts.getPromotionProducts();
-
-
-
     }
 
     public void validateProductExist(StockProducts stockProducts) {

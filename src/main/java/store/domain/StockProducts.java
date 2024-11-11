@@ -25,12 +25,12 @@ public class StockProducts {
     }
 
     public void updateStockQuantity(PurchaseProduct purchaseProduct) {
+        //TODO: 실제로 재고 차감시켜야됨 아직 안함
         if(purchaseProduct.isPromotionProduct()){
-            getPromotionProducts().updateStockQuantity(purchaseProduct);
+            getPromotionProducts().updateStockQuantity(purchaseProduct, getGeneralProducts());
             return;
         }
-
-        getGeneralProducts().updateStockQuantity(purchaseProduct);
+        getGeneralProducts().minusStockQuantity(purchaseProduct);
     }
 
     public void validateProductExist(PurchaseProduct purchaseProduct) {
@@ -41,4 +41,13 @@ public class StockProducts {
             throw new IllegalArgumentException(ErrorCode.NOT_FOUND_PRODUCT.getMessage());
         }
     }
+
+    public int getPriceByProductName(String productName) {
+        return stockProducts.stream()
+                .filter(product -> product.getName().equals(productName))
+                .findFirst()
+                .map(Product::getPrice)
+                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_PRODUCT.getMessage()));
+    }
+
 }

@@ -21,10 +21,22 @@ public class Application {
     public static void main(String[] args) {
 
         StockProducts stockProducts = productService.getAllProducts();
-        OutputView.printAllStockQuantities(stockProducts.getStockProducts());
-        try (InputView inputView = new InputView()) {
-            inputView.inputPurchaseProducts();
-            System.out.println();
+        InputView inputView = new InputView();
+
+        while (true) {
+            OutputView.printAllStockQuantities(stockProducts.getStockProducts(), stockProducts);;
+                PurchaseProducts purchaseProducts = inputView.inputPurchaseProducts(stockProducts);
+                boolean isMemberShip = InputView.isMembership();
+
+                purchaseProductService.updateStockQuantity(stockProducts, purchaseProducts);
+                OutputView.printReceipt(purchaseProductService.getReceipt(purchaseProducts, isMemberShip));
+
+
+
+            if (!InputView.isContinue()) {
+                break;
+            }
         }
+        inputView.close();
     }
 }

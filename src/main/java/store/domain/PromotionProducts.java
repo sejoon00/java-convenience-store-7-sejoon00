@@ -1,7 +1,5 @@
 package store.domain;
 
-import camp.nextstep.edu.missionutils.DateTimes;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,18 +22,25 @@ public class PromotionProducts {
     }
 
     public boolean isPromotionProduct(PurchaseProduct purchaseProduct, List<Promotion> allPromotions) {
+        if (!promotionProducts.containsKey(purchaseProduct.getName())) {
+            return false;
+        }
         Product product = promotionProducts.get(purchaseProduct.getName());
         return allPromotions.stream()
                 .filter(Promotion::isIncludeDateRange)
-                .anyMatch(promotion -> promotion.isEqualsName(product.getPromotion()));
+                .anyMatch(promotion -> promotion.isEqualsName(product.getPromotionName()));
     }
 
-    public void updateStockQuantity(PurchaseProduct purchaseProduct) {
+    public void updateStockQuantity(PurchaseProduct purchaseProduct, GeneralProducts generalProducts) {
         if (!promotionProducts.containsKey(purchaseProduct.getName())) {
             throw new IllegalArgumentException(ErrorCode.NOT_FOUND_PRODUCT.getMessage());
         }
         Product product = promotionProducts.get(purchaseProduct.getName());
-        product.minusQuantity(purchaseProduct.getQuantity());
+//        product.minusPromotionQuantity(purchaseProduct, generalProducts);
+    }
+
+    public Product getProduct(String productName) {
+        return promotionProducts.get(productName);
     }
 
 

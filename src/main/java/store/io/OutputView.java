@@ -2,19 +2,45 @@ package store.io;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import store.domain.GeneralProducts;
 import store.domain.Product;
+import store.domain.StockProducts;
+import store.dto.ReceiptResponse;
 
 public class OutputView {
 
-    public static void printAllStockQuantities(List<Product> products) {
+    public static void printReceipt(ReceiptResponse receiptResponse) {
+        System.out.println("==============W 편의점================");
+        System.out.println("상품명\t\t수량\t금액");
+        receiptResponse.purchaseProductResponses().forEach(purchaseProductResponse -> {
+            System.out.println(purchaseProductResponse.productName() + "\t\t" + purchaseProductResponse.productQuantity() + "\t" + getDFFormat(purchaseProductResponse.totalPrice()));
+        });
+        System.out.println("=============증\t정===============");
+        receiptResponse.promotionProductResponses().forEach(promotionProductResponse -> {
+            System.out.println(promotionProductResponse.productName() + "\t\t" + promotionProductResponse.count());
+        });
+        System.out.println("====================================");
+        System.out.println("총구매액\t\t" + receiptResponse.totalCount() + "\t" + getDFFormat(receiptResponse.totalPrice()));
+        System.out.println("행사할인"+"-" + getDFFormat(receiptResponse.promotionDiscountPrice()));
+        System.out.println("멤버십할인"+"-" + getDFFormat(receiptResponse.membershipDiscountPrice()));
+        System.out.println("내실돈" + getDFFormat(receiptResponse.totalResult()));
+        System.out.println();
+    }
+
+    private static String getDFFormat(int price) {
+        DecimalFormat df = new DecimalFormat("###,###");
+        return df.format(price);
+    }
+
+    public static void printAllStockQuantities(List<Product> products, StockProducts stockProducts) {
         System.out.println("안녕하세요. W편의점입니다.");
         System.out.println("현재 보유하고 있는 상품입니다.\n");
         StringBuilder sb = new StringBuilder();
-        products.forEach(product -> printStockQuantity(sb, product));
+        products.forEach(product -> printStockQuantity(sb, product, stockProducts));
         System.out.println(sb);
     }
 
-    private static void printStockQuantity(StringBuilder sb, Product product) {
+    private static void printStockQuantity(StringBuilder sb, Product product, StockProducts stockProducts) {
         sb.append("- ")
                 .append(product.getName())
                 .append(" ");
@@ -22,8 +48,20 @@ public class OutputView {
         sb.append(" ");
         changeQuantityToOutputViewFormat(sb, product.getQuantity());
         sb.append(" ");
-        changePromotionToOutputViewFormat(sb, product.getPromotion());
+        changePromotionToOutputViewFormat(sb, product.getPromotionName());
         sb.append("\n");
+        GeneralProducts generalProducts = stockProducts.getGeneralProducts();
+        if(!generalProducts.isContainProduct(product.getName())){
+            sb.append("- ")
+                    .append(product.getName())
+                    .append(" ");
+            changePriceToOutputViewFormat(sb, product.getPrice());
+            sb.append(" ");
+            changeQuantityToOutputViewFormat(sb, 0);
+            sb.append(" ");
+            changePromotionToOutputViewFormat(sb, product.getPromotionName());
+            sb.append("\n");
+        }
 
     }
 

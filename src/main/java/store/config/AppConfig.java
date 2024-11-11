@@ -11,7 +11,7 @@ import store.service.PurchaseProductService;
 public class AppConfig {
 
     public static ProductService productService(){
-        return new ProductService(productsRepository());
+        return new ProductService(productsRepository(), promotionService());
     }
 
     public static ProductsRepository productsRepository(){

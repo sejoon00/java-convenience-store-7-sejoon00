@@ -21,11 +21,22 @@ public class GeneralProducts {
         return new GeneralProducts(collectMap);
     }
 
-    public void updateStockQuantity(PurchaseProduct purchaseProduct) {
+    public void minusStockQuantity(PurchaseProduct purchaseProduct) {
         if (!generalProducts.containsKey(purchaseProduct.getName())) {
             throw new IllegalArgumentException(ErrorCode.NOT_FOUND_PRODUCT.getMessage());
         }
         Product product = generalProducts.get(purchaseProduct.getName());
-        product.minusQuantity(purchaseProduct.getQuantity());
+    }
+
+    public boolean isContainProduct(String productName) {
+        return generalProducts.containsKey(productName);
+    }
+
+    public Product getProduct(String productName) {
+        return generalProducts.get(productName);
+    }
+
+    public boolean isGeneralProduct(PurchaseProduct purchaseProduct) {
+        return generalProducts.containsKey(purchaseProduct.getName());
     }
 }

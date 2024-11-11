@@ -2,6 +2,7 @@ package store.service;
 
 import java.util.List;
 import store.domain.Promotion;
+import store.error.ErrorCode;
 import store.repository.PromotionRepository;
 
 public class PromotionService {
@@ -14,5 +15,10 @@ public class PromotionService {
 
     public List<Promotion> getAllPromotions() {
         return promotionRepository.findAllPromotion();
+    }
+
+    public Promotion getPromotionByName(String name) {
+        return promotionRepository.findPromotionByName(name)
+                .orElseThrow(() -> new IllegalStateException(ErrorCode.NOT_FOUND_PROMOTION.getMessage()));
     }
 }

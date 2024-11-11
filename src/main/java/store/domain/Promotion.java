@@ -6,14 +6,14 @@ import java.time.LocalDate;
 public class Promotion {
     private String name;
     private int buyCount;
-    private int getCount;
+    private int plusCount;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Promotion(String name, int buyCount, int getCount, LocalDate startDate, LocalDate endDate) {
+    public Promotion(String name, int buyCount, int plusCount, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.buyCount = buyCount;
-        this.getCount = getCount;
+        this.plusCount = plusCount;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -29,5 +29,17 @@ public class Promotion {
 
     public boolean isEqualsName(String name) {
         return this.name.equals(name);
+    }
+
+    public int getPlusCount() {
+        return plusCount;
+    }
+
+    public int getBuyCount() {
+        return buyCount;
+    }
+
+    public int getPromotionCount() {
+        return buyCount + plusCount;
     }
 }
