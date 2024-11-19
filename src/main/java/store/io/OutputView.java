@@ -2,9 +2,9 @@ package store.io;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import store.domain.GeneralProducts;
+import store.domain.GeneralStocks;
 import store.domain.Product;
-import store.domain.StockProducts;
+import store.domain.Stocks;
 import store.dto.ReceiptResponse;
 
 public class OutputView {
@@ -23,7 +23,7 @@ public class OutputView {
         System.out.println("총구매액\t\t" + receiptResponse.totalCount() + "\t" + getDFFormat(receiptResponse.totalPrice()));
         System.out.println("행사할인"+"-" + getDFFormat(receiptResponse.promotionDiscountPrice()));
         System.out.println("멤버십할인"+"-" + getDFFormat(receiptResponse.membershipDiscountPrice()));
-        System.out.println("내실돈" + getDFFormat(receiptResponse.totalResult()));
+        System.out.println("내실돈" + getDFFormat(receiptResponse.totalPayment()));
         System.out.println();
     }
 
@@ -32,15 +32,15 @@ public class OutputView {
         return df.format(price);
     }
 
-    public static void printAllStockQuantities(List<Product> products, StockProducts stockProducts) {
+    public static void printAllStockQuantities(List<Product> products, Stocks stocks) {
         System.out.println("안녕하세요. W편의점입니다.");
         System.out.println("현재 보유하고 있는 상품입니다.\n");
         StringBuilder sb = new StringBuilder();
-        products.forEach(product -> printStockQuantity(sb, product, stockProducts));
+        products.forEach(product -> printStockQuantity(sb, product, stocks));
         System.out.println(sb);
     }
 
-    private static void printStockQuantity(StringBuilder sb, Product product, StockProducts stockProducts) {
+    private static void printStockQuantity(StringBuilder sb, Product product, Stocks stocks) {
         sb.append("- ")
                 .append(product.getName())
                 .append(" ");
@@ -50,8 +50,9 @@ public class OutputView {
         sb.append(" ");
         changePromotionToOutputViewFormat(sb, product.getPromotionName());
         sb.append("\n");
-        GeneralProducts generalProducts = stockProducts.getGeneralProducts();
-        if(!generalProducts.isContainProduct(product.getName())){
+        GeneralStocks generalStocks = stocks.getGeneralProducts();
+        if(!generalStocks.isContainProduct(product.getName())){
+
             sb.append("- ")
                     .append(product.getName())
                     .append(" ");

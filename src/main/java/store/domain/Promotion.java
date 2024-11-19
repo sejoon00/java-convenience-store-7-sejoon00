@@ -39,7 +39,7 @@ public class Promotion {
         return buyCount;
     }
 
-    public int getPromotionCount() {
+    public int getPromotionBundleCount() {
         return buyCount + plusCount;
     }
 }

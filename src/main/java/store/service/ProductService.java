@@ -1,11 +1,9 @@
 package store.service;
 
 import java.util.List;
-import store.domain.GeneralProducts;
 import store.domain.Product;
 import store.domain.Promotion;
-import store.domain.PromotionProducts;
-import store.domain.StockProducts;
+import store.domain.Stocks;
 import store.repository.ProductsRepository;
 
 public class ProductService {
@@ -18,7 +16,7 @@ public class ProductService {
         this.promotionService = promotionService;
     }
 
-    public StockProducts getAllProducts(){
+    public Stocks getAllProducts(){
         List<Product> allProducts = productsRepository.findAllProducts();
         allProducts.stream()
                 .filter(Product::hasPromotion)
@@ -26,7 +24,17 @@ public class ProductService {
                     Promotion promotion = promotionService.getPromotionByName(product.getPromotionName());
                     product.setPromotion(promotion);
                 });
-        return new StockProducts(allProducts);
+
+        allProducts.stream()
+                .filter(Product::hasPromotion)
+                .forEach(product -> {
+                    Promotion promotion = promotionService.getPromotionByName(product.getPromotionName());
+                    product.setPromotion(promotion);
+                });
+
+        Stocks stocks = new Stocks(allProducts);
+
+        return new Stocks(allProducts);
     }
 
 

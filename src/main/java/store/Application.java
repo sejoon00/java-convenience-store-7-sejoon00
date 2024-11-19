@@ -1,16 +1,11 @@
 package store;
 
-import java.util.List;
-import java.util.function.Supplier;
 import store.config.AppConfig;
-import store.domain.Product;
-import store.domain.Promotion;
 import store.domain.PurchaseProducts;
-import store.domain.StockProducts;
+import store.domain.Stocks;
 import store.io.InputView;
 import store.io.OutputView;
 import store.service.ProductService;
-import store.service.PromotionService;
 import store.service.PurchaseProductService;
 
 public class Application {
@@ -20,18 +15,16 @@ public class Application {
 
     public static void main(String[] args) {
 
-        StockProducts stockProducts = productService.getAllProducts();
+        Stocks stocks = productService.getAllProducts();
         InputView inputView = new InputView();
 
         while (true) {
-            OutputView.printAllStockQuantities(stockProducts.getStockProducts(), stockProducts);;
-                PurchaseProducts purchaseProducts = inputView.inputPurchaseProducts(stockProducts);
-                boolean isMemberShip = InputView.isMembership();
+            OutputView.printAllStockQuantities(stocks.getStockProducts(), stocks);
+            PurchaseProducts purchaseProducts = inputView.inputPurchaseProducts(stocks);
+            boolean isMemberShip = InputView.isMembership();
 
-                purchaseProductService.updateStockQuantity(stockProducts, purchaseProducts);
-                OutputView.printReceipt(purchaseProductService.getReceipt(purchaseProducts, isMemberShip));
-
-
+            purchaseProductService.updateStockQuantity(stocks, purchaseProducts);
+            OutputView.printReceipt(purchaseProductService.getReceipt(purchaseProducts, isMemberShip));
 
             if (!InputView.isContinue()) {
                 break;

@@ -27,6 +27,6 @@ public class AppConfig {
     }
 
     public static PurchaseProductService purchaseProductService() {
-        return new PurchaseProductService(promotionService());
+        return new PurchaseProductService();
     }
 }

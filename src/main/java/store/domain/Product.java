@@ -1,7 +1,6 @@
 package store.domain;
 
 import store.error.ErrorCode;
-import store.io.InputView;
 
 public class Product {
 
@@ -18,6 +17,8 @@ public class Product {
         this.promotionName = promotionName;
     }
 
+
+
     @Override
     public String toString() {
         return this.name;
@@ -27,7 +28,7 @@ public class Product {
         if (promotion == null) {
             return 0;
         }
-        return quantity - (quantity % promotion.getPromotionCount());
+        return quantity - (quantity % promotion.getPromotionBundleCount());
     }
 
     public boolean hasPromotion() {

@@ -4,7 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import java.util.function.Supplier;
 import store.config.AppConfig;
 import store.domain.PurchaseProducts;
-import store.domain.StockProducts;
+import store.domain.Stocks;
 import store.error.ErrorCode;
 import store.service.PurchaseProductService;
 
@@ -53,9 +53,9 @@ public class InputView implements AutoCloseable {
     }
 
 
-    public PurchaseProducts inputPurchaseProducts(StockProducts stockProducts) {
+    public PurchaseProducts inputPurchaseProducts(Stocks stocks) {
         return retryInput("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])",
-                () -> purchaseProductService.checkFromStockQuantity(stockProducts, PurchaseProducts.from(readLine())));
+                () -> purchaseProductService.checkFromStockQuantity(stocks, PurchaseProducts.from(readLine())));
     }
 
     public static boolean isContinue() {

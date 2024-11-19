@@ -29,7 +29,13 @@ public class PurchaseProducts {
         return purchaseProducts;
     }
 
-    public void validateProductExist(StockProducts stockProducts) {
-        purchaseProducts.forEach(stockProducts::validateProductExist);
+    public void validateProductExist(Stocks stocks) {
+        purchaseProducts.forEach(stocks::validateProductExist);
     }
+
+    public void checkStock(Stocks stocks){
+        purchaseProducts.forEach(stocks::checkStock);
+    }
+
+
 }

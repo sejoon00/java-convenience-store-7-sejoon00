@@ -5,20 +5,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import store.error.ErrorCode;
 
-public class GeneralProducts {
+public class GeneralStocks {
 
     private Map<String, Product> generalProducts;
 
-    public GeneralProducts(Map<String, Product> generalProducts) {
+    public GeneralStocks(Map<String, Product> generalProducts) {
         this.generalProducts = generalProducts;
     }
 
-    public static GeneralProducts from(List<Product> products){
+    public static GeneralStocks from(List<Product> products){
         Map<String, Product> collectMap = products.stream()
                 .filter(product -> !product.hasPromotion())
                 .collect(Collectors.toMap(Product::getName, product -> product));
 
-        return new GeneralProducts(collectMap);
+        return new GeneralStocks(collectMap);
     }
 
     public void minusStockQuantity(PurchaseProduct purchaseProduct) {

@@ -1,6 +1,7 @@
 package store.dto;
 
 import java.util.List;
+import store.domain.Receipt;
 
 public record ReceiptResponse(
         List<PurchaseProductResponse> purchaseProductResponses,
@@ -9,8 +10,25 @@ public record ReceiptResponse(
         int totalCount,
         int promotionDiscountPrice,
         int membershipDiscountPrice,
-        int totalResult
+        int totalPayment
 ) {
+
+    public static ReceiptResponse of(
+            List<PurchaseProductResponse> purchaseProductResponses,
+            List<PromotionProductResponse> promotionProductResponses,
+            Receipt receipt
+    ){
+        return new ReceiptResponse(
+                purchaseProductResponses,
+                promotionProductResponses,
+                receipt.getTotalCount(),
+                receipt.getTotalPrice(),
+                receipt.getPromotionDiscountPrice(),
+                receipt.setMembershipDiscountPrice(),
+                receipt.getTotalPayment()
+        );
+    }
+
     @Override
     public List<PurchaseProductResponse> purchaseProductResponses() {
         return purchaseProductResponses;
@@ -41,8 +59,7 @@ public record ReceiptResponse(
         return membershipDiscountPrice;
     }
 
-    @Override
-    public int totalResult() {
-        return totalResult;
+    public int totalPayment() {
+        return totalPayment;
     }
 }
